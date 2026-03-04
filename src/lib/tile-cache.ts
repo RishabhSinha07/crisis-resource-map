@@ -20,7 +20,7 @@ function latLngToTile(lat: number, lng: number, zoom: number) {
   return { x, y };
 }
 
-function getCartoStyle(): 'dark_all' | 'light_all' {
+function getCartoStyle(): 'dark_all' | 'rastertiles/voyager' {
   try {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
     return stored === 'light' ? 'rastertiles/voyager' : 'dark_all';
