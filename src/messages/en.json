@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Crisis Resource Map",
+    "subtitle": "resources active"
+  },
+  "resources": {
+    "shelter": "Shelter",
+    "water": "Water",
+    "food": "Food",
+    "medical": "Medical",
+    "wifi": "WiFi",
+    "transport": "Transport",
+    "addResource": "Add Resource",
+    "addTitle": "Add a Resource",
+    "name": "Name",
+    "namePlaceholder": "e.g. Community Center Shelter",
+    "type": "Type",
+    "description": "Description",
+    "descriptionPlaceholder": "Details about this resource...",
+    "contactInfo": "Contact Info",
+    "contactPlaceholder": "Phone, address, or other contact",
+    "tapMap": "Tap the map to place a pin",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "locationSet": "Location set",
+    "upvote": "Helpful",
+    "downvote": "Not helpful",
+    "noResources": "No resources found. Be the first to add one!"
+  },
+  "filters": {
+    "all": "All",
+    "clearFilters": "Clear filters"
+  },
+  "search": {
+    "placeholder": "Search for a city or place...",
+    "locateMe": "Locate me",
+    "noResults": "No results found"
+  },
+  "offline": {
+    "banner": "You are offline. Showing cached data.",
+    "unavailable": "This feature is unavailable offline.",
+    "saveArea": "Save area offline",
+    "savingArea": "Downloading tiles",
+    "areaSaved": "Area saved for offline use",
+    "saveFailed": "Failed to save area",
+    "queuedForSync": "Saved locally. Will sync when online."
+  },
+  "language": {
+    "label": "Language"
+  }
+}

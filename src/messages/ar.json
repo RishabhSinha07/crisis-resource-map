@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "خريطة موارد الأزمات",
+    "subtitle": "موارد نشطة"
+  },
+  "resources": {
+    "shelter": "مأوى",
+    "water": "ماء",
+    "food": "طعام",
+    "medical": "طبي",
+    "wifi": "واي فاي",
+    "transport": "نقل",
+    "addResource": "إضافة مورد",
+    "addTitle": "إضافة مورد",
+    "name": "الاسم",
+    "namePlaceholder": "مثال: مأوى المركز المجتمعي",
+    "type": "النوع",
+    "description": "الوصف",
+    "descriptionPlaceholder": "تفاصيل حول هذا المورد...",
+    "contactInfo": "معلومات الاتصال",
+    "contactPlaceholder": "هاتف، عنوان، أو وسيلة اتصال أخرى",
+    "tapMap": "اضغط على الخريطة لوضع دبوس",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "locationSet": "تم تحديد الموقع",
+    "upvote": "مفيد",
+    "downvote": "غير مفيد",
+    "noResources": "لم يتم العثور على موارد. كن أول من يضيف واحدًا!"
+  },
+  "filters": {
+    "all": "الكل",
+    "clearFilters": "مسح الفلاتر"
+  },
+  "search": {
+    "placeholder": "ابحث عن مدينة أو مكان...",
+    "locateMe": "حدد موقعي",
+    "noResults": "لم يتم العثور على نتائج"
+  },
+  "offline": {
+    "banner": "أنت غير متصل. عرض البيانات المخزنة مؤقتًا.",
+    "unavailable": "هذه الميزة غير متاحة في وضع عدم الاتصال.",
+    "saveArea": "حفظ المنطقة للعمل بدون اتصال",
+    "savingArea": "جاري تنزيل الخريطة",
+    "areaSaved": "تم حفظ المنطقة للعمل بدون اتصال",
+    "saveFailed": "فشل في حفظ المنطقة",
+    "queuedForSync": "تم الحفظ محليًا. ستتم المزامنة عند الاتصال."
+  },
+  "language": {
+    "label": "اللغة"
+  }
+}

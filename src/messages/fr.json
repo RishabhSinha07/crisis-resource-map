@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Carte des ressources de crise",
+    "subtitle": "ressources actives"
+  },
+  "resources": {
+    "shelter": "Abri",
+    "water": "Eau",
+    "food": "Nourriture",
+    "medical": "Médical",
+    "wifi": "WiFi",
+    "transport": "Transport",
+    "addResource": "Ajouter une ressource",
+    "addTitle": "Ajouter une ressource",
+    "name": "Nom",
+    "namePlaceholder": "ex. Abri du centre communautaire",
+    "type": "Type",
+    "description": "Description",
+    "descriptionPlaceholder": "Détails sur cette ressource...",
+    "contactInfo": "Coordonnées",
+    "contactPlaceholder": "Téléphone, adresse ou autre contact",
+    "tapMap": "Appuyez sur la carte pour placer un repère",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "locationSet": "Emplacement défini",
+    "upvote": "Utile",
+    "downvote": "Pas utile",
+    "noResources": "Aucune ressource trouvée. Soyez le premier à en ajouter !"
+  },
+  "filters": {
+    "all": "Tout",
+    "clearFilters": "Effacer les filtres"
+  },
+  "search": {
+    "placeholder": "Rechercher une ville ou un lieu...",
+    "locateMe": "Me localiser",
+    "noResults": "Aucun résultat trouvé"
+  },
+  "offline": {
+    "banner": "Vous êtes hors ligne. Affichage des données en cache.",
+    "unavailable": "Cette fonctionnalité n'est pas disponible hors ligne.",
+    "saveArea": "Sauvegarder la zone hors ligne",
+    "savingArea": "Téléchargement des tuiles",
+    "areaSaved": "Zone sauvegardée pour utilisation hors ligne",
+    "saveFailed": "Échec de la sauvegarde",
+    "queuedForSync": "Enregistré localement. Synchronisation au retour en ligne."
+  },
+  "language": {
+    "label": "Langue"
+  }
+}
