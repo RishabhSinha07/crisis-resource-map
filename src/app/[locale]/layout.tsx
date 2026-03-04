@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { RTL_LOCALES } from '@/lib/constants';
 import type { Locale } from '@/lib/constants';
+import { themeScript } from '@/lib/theme-script';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: '#0c0f14',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -43,8 +43,10 @@ export default async function LocaleLayout({
   const dir = RTL_LOCALES.includes(locale as Locale) ? 'rtl' : 'ltr';
 
   return (
-    <html lang={locale} dir={dir}>
-      <head />
+    <html lang={locale} dir={dir} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}

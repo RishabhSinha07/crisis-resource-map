@@ -20,8 +20,18 @@ function latLngToTile(lat: number, lng: number, zoom: number) {
   return { x, y };
 }
 
+function getCartoStyle(): 'dark_all' | 'light_all' {
+  try {
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
+    return stored === 'light' ? 'rastertiles/voyager' : 'dark_all';
+  } catch {
+    return 'dark_all';
+  }
+}
+
 function getTileUrls(bounds: Bounds, zoom: number): string[] {
   const servers = ['a', 'b', 'c'];
+  const style = getCartoStyle();
   const min = latLngToTile(bounds.north, bounds.west, zoom);
   const max = latLngToTile(bounds.south, bounds.east, zoom);
 
@@ -29,7 +39,7 @@ function getTileUrls(bounds: Bounds, zoom: number): string[] {
   for (let x = min.x; x <= max.x; x++) {
     for (let y = min.y; y <= max.y; y++) {
       const server = servers[(x + y) % 3];
-      urls.push(`https://${server}.tile.openstreetmap.org/${zoom}/${x}/${y}.png`);
+      urls.push(`https://${server}.basemaps.cartocdn.com/${style}/${zoom}/${x}/${y}.png`);
     }
   }
   return urls;

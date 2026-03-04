@@ -47,5 +47,9 @@
   },
   "language": {
     "label": "اللغة"
+  },
+  "theme": {
+    "switchToLight": "التبديل إلى الوضع الفاتح",
+    "switchToDark": "التبديل إلى الوضع الداكن"
   }
 }

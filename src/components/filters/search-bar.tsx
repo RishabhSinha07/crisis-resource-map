@@ -59,7 +59,7 @@ export function SearchBar() {
       <div className="relative">
         <Search
           size={14}
-          className="absolute left-3 top-1/2 -translate-y-1/2"
+          className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 pointer-events-none"
           style={{ color: 'var(--text-dim)' }}
         />
         <input
@@ -68,12 +68,13 @@ export function SearchBar() {
           onChange={(e) => handleSearch(e.target.value)}
           onFocus={() => results.length > 0 && setShowResults(true)}
           placeholder={t('placeholder')}
-          className="tac-input w-full pl-9 pr-8"
+          className="tac-input w-full"
+          style={{ paddingInlineStart: '2.25rem', paddingInlineEnd: '2rem' }}
         />
         {query && (
           <button
             onClick={() => { setQuery(''); setResults([]); setShowResults(false); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-sm hover:bg-white/5"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-sm hover-overlay"
           >
             <X size={12} style={{ color: 'var(--text-dim)' }} />
           </button>
@@ -110,7 +111,7 @@ export function SearchBar() {
             <button
               key={i}
               onClick={() => selectResult(r)}
-              className="w-full text-left px-4 py-2.5 text-xs truncate transition-colors hover:bg-white/5"
+              className="w-full text-left px-4 py-2.5 text-xs truncate transition-colors hover-overlay"
               style={{
                 color: 'var(--text-secondary)',
                 borderBottom: '1px solid var(--border-dim)',

@@ -51,7 +51,7 @@ export function LanguagePicker() {
           <button
             key={loc}
             onClick={() => switchLocale(loc)}
-            className="w-full text-left rtl:text-right px-4 py-2 text-xs transition-colors hover:bg-white/5"
+            className="w-full text-left rtl:text-right px-4 py-2 text-xs transition-colors hover-overlay"
             style={{
               fontFamily: loc === locale ? 'var(--font-mono)' : 'var(--font-sans)',
               color: loc === locale ? 'var(--accent-amber)' : 'var(--text-secondary)',

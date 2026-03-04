@@ -7,6 +7,7 @@ import { AddResourceDrawer } from '@/components/resources/add-resource-drawer';
 import { LocateButton } from '@/components/map/locate-button';
 import { SaveOfflineButton } from '@/components/map/save-offline-button';
 import { LanguagePicker } from '@/components/ui/language-picker';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { OfflineBanner } from '@/components/ui/offline-banner';
 import { useResources } from '@/hooks/use-resources';
 import { useResourceStore } from '@/stores/resource-store';
@@ -66,7 +67,10 @@ export function MapPageClient({ initialResources }: MapPageClientProps) {
               </div>
             </div>
           </div>
-          <LanguagePicker />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguagePicker />
+          </div>
         </div>
 
         {/* Search */}

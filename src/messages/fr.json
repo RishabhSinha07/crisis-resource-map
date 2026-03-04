@@ -47,5 +47,9 @@
   },
   "language": {
     "label": "Langue"
+  },
+  "theme": {
+    "switchToLight": "Passer au mode clair",
+    "switchToDark": "Passer au mode sombre"
   }
 }

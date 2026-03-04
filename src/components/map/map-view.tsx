@@ -5,11 +5,17 @@ import { MapContainer, TileLayer, useMapEvents, useMap, Marker, Circle, CircleMa
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useResourceStore } from '@/stores/resource-store';
 import { useMapStore } from '@/stores/map-store';
+import { useThemeStore } from '@/stores/theme-store';
 import { ResourceMarker } from './resource-marker';
-import { pinIcon } from '@/lib/marker-icons';
+import { getPinIcon } from '@/lib/marker-icons';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
+
+const TILE_URLS = {
+  dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  light: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+} as const;
 
 function MapEvents() {
   useMapEvents({
@@ -49,6 +55,7 @@ function FlyToHandler() {
 export default function MapView() {
   const filteredResources = useResourceStore((s) => s.filteredResources);
   const { center, zoom, pinnedLocation, placingPin, userLocation, userAccuracy } = useMapStore();
+  const theme = useThemeStore((s) => s.theme);
 
   const resources = filteredResources();
 
@@ -60,12 +67,13 @@ export default function MapView() {
       zoomControl={false}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        key={theme}
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+        url={TILE_URLS[theme]}
       />
       <MapEvents />
       <FlyToHandler />
-      <MarkerClusterGroup chunkedLoading maxClusterRadius={40} disableClusteringAtZoom={15}>
+      <MarkerClusterGroup key={`cluster-${theme}`} chunkedLoading maxClusterRadius={40} disableClusteringAtZoom={15}>
         {resources.map((resource) => (
           <ResourceMarker key={resource.id} resource={resource} />
         ))}
@@ -96,7 +104,7 @@ export default function MapView() {
         </>
       )}
       {pinnedLocation && (
-        <Marker position={pinnedLocation} icon={pinIcon} />
+        <Marker position={pinnedLocation} icon={getPinIcon()} />
       )}
     </MapContainer>
   );

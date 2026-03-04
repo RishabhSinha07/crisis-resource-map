@@ -141,7 +141,7 @@ export function AddResourceDrawer() {
           </span>
           <button
             onClick={handleClose}
-            className="ml-2 p-1 transition-colors hover:bg-white/10"
+            className="ml-2 p-1 transition-colors hover-overlay"
             style={{ borderRadius: '2px' }}
           >
             <X size={14} style={{ color: 'var(--text-dim)' }} />
@@ -186,7 +186,7 @@ export function AddResourceDrawer() {
           </h2>
           <button
             onClick={handleClose}
-            className="p-1.5 transition-colors hover:bg-white/5"
+            className="p-1.5 transition-colors hover-overlay"
             style={{ borderRadius: '2px' }}
           >
             <X size={14} style={{ color: 'var(--text-dim)' }} />
@@ -198,7 +198,7 @@ export function AddResourceDrawer() {
           <button
             type="button"
             onClick={handleReplacePin}
-            className="flex items-center gap-2 mb-5 px-3 py-2.5 w-full transition-colors hover:bg-white/5"
+            className="flex items-center gap-2 mb-5 px-3 py-2.5 w-full transition-colors hover-overlay"
             style={{
               background: 'var(--accent-green-dim)',
               border: '1px solid rgba(0, 210, 106, 0.2)',

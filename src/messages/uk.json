@@ -47,5 +47,9 @@
   },
   "language": {
     "label": "Мова"
+  },
+  "theme": {
+    "switchToLight": "Перемкнути на світлу тему",
+    "switchToDark": "Перемкнути на темну тему"
   }
 }
