@@ -30,6 +30,14 @@ export function ResourceMarker({ resource }: ResourceMarkerProps) {
             >
               {t(resource.type)}
             </span>
+            {resource.source && resource.source !== 'crowdsourced' && (
+              <span
+                className="text-[9px] uppercase tracking-[0.08em] opacity-60"
+                style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}
+              >
+                via {resource.source.toUpperCase()}
+              </span>
+            )}
           </div>
           <h3
             className="font-semibold text-[13px] mb-1"

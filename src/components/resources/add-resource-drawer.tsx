@@ -94,6 +94,9 @@ export function AddResourceDrawer() {
         downvotes: 0,
         status: 'active',
         created_at: new Date().toISOString(),
+        source: 'crowdsourced',
+        source_id: null,
+        updated_at: new Date().toISOString(),
       };
       addResource(localResource);
       handleClose();

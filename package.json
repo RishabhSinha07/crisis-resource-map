@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ingest:osm": "npx tsx scripts/ingest-osm.ts",
+    "ingest:osm:dry-run": "npx tsx scripts/ingest-osm.ts --dry-run"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^5.1.0",

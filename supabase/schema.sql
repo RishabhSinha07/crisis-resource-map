@@ -16,7 +16,10 @@ CREATE TABLE resources (
   downvotes INTEGER DEFAULT 0,
   status VARCHAR(10) DEFAULT 'active',
   contact_info VARCHAR(500),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  source VARCHAR(20) DEFAULT 'crowdsourced',
+  source_id VARCHAR(100),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Votes table
@@ -130,6 +133,9 @@ CREATE POLICY "Anyone can delete votes" ON votes
 ALTER PUBLICATION supabase_realtime ADD TABLE resources;
 
 -- Indexes
+CREATE UNIQUE INDEX idx_resources_source_dedup
+  ON resources (source, source_id) WHERE source_id IS NOT NULL;
+CREATE INDEX idx_resources_source ON resources(source);
 CREATE INDEX idx_resources_type ON resources(type);
 CREATE INDEX idx_resources_status ON resources(status);
 CREATE INDEX idx_resources_location ON resources(lat, lng);

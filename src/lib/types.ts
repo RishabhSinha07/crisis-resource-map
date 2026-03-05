@@ -12,6 +12,9 @@ export interface Resource {
   status: string;
   contact_info: string | null;
   created_at: string;
+  source: string;
+  source_id: string | null;
+  updated_at: string;
 }
 
 export interface Vote {
