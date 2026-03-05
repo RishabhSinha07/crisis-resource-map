@@ -12,7 +12,7 @@ import { OfflineBanner } from '@/components/ui/offline-banner';
 import { useResources } from '@/hooks/use-resources';
 import { useResourceStore } from '@/stores/resource-store';
 import { useTranslations } from 'next-intl';
-import { Shield } from 'lucide-react';
+import { Shield, Star, Github } from 'lucide-react';
 import type { Resource } from '@/lib/types';
 
 interface MapPageClientProps {
@@ -68,6 +68,22 @@ export function MapPageClient({ initialResources }: MapPageClientProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <a
+              href="https://github.com/RishabhSinha07/crisis-resource-map"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] uppercase tracking-wider transition-colors hover:opacity-80"
+              style={{
+                color: 'var(--text-dim)',
+                fontFamily: 'var(--font-mono)',
+                border: '1px solid var(--border-dim)',
+                borderRadius: '2px',
+              }}
+            >
+              <Github size={13} />
+              <Star size={11} />
+              <span>Star</span>
+            </a>
             <ThemeToggle />
             <LanguagePicker />
           </div>
