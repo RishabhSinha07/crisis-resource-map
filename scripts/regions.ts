@@ -58,4 +58,21 @@ export const REGIONS: Region[] = [
 
   // Jordan
   { name: 'Zaatari', bbox: [32.27, 36.30, 32.32, 36.35] },
+
+  // USA — Disaster-prone areas
+  // Gulf Coast (hurricanes, flooding)
+  { name: 'Houston', bbox: [29.55, -95.60, 29.90, -95.15] },
+  { name: 'New Orleans', bbox: [29.87, -90.14, 30.05, -89.87] },
+  { name: 'Miami', bbox: [25.70, -80.35, 25.86, -80.13] },
+  { name: 'Tampa', bbox: [27.87, -82.55, 28.00, -82.40] },
+  // Tornado Alley
+  { name: 'Oklahoma City', bbox: [35.35, -97.65, 35.55, -97.40] },
+  { name: 'Dallas', bbox: [32.65, -96.95, 32.90, -96.65] },
+  // Earthquake zones
+  { name: 'Los Angeles', bbox: [33.90, -118.40, 34.10, -118.15] },
+  { name: 'San Francisco', bbox: [37.70, -122.52, 37.82, -122.35] },
+  { name: 'Seattle', bbox: [47.50, -122.40, 47.70, -122.25] },
+  // Wildfire-prone areas
+  { name: 'Denver', bbox: [39.63, -105.05, 39.80, -104.85] },
+  { name: 'Sacramento', bbox: [38.50, -121.55, 38.62, -121.40] },
 ];
