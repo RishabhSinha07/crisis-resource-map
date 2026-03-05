@@ -17,6 +17,11 @@ const TILE_URLS = {
   light: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
 } as const;
 
+const MAP_BG = {
+  dark: '#2b2b2b',
+  light: '#f2efe9',
+} as const;
+
 function MapEvents() {
   useMapEvents({
     click(e) {
@@ -70,6 +75,10 @@ export default function MapView() {
     <MapContainer
       center={center}
       zoom={zoom}
+      minZoom={3}
+      maxBounds={[[-85, -180], [85, 180]]}
+      maxBoundsViscosity={1.0}
+      style={{ background: MAP_BG[theme] }}
       className={`w-full h-full ${placingPin ? 'cursor-crosshair' : ''}`}
       zoomControl={false}
     >
