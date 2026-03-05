@@ -134,7 +134,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE resources;
 
 -- Indexes
 CREATE UNIQUE INDEX idx_resources_source_dedup
-  ON resources (source, source_id) WHERE source_id IS NOT NULL;
+  ON resources (source, source_id);
 CREATE INDEX idx_resources_source ON resources(source);
 CREATE INDEX idx_resources_type ON resources(type);
 CREATE INDEX idx_resources_status ON resources(status);

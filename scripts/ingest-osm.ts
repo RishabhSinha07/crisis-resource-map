@@ -75,7 +75,7 @@ function buildOverpassQuery(bbox: [number, number, number, number]): string {
     (r) => `  node["${r.key}"="${r.value}"](${bboxStr});`
   ).join('\n');
 
-  return `[out:json][timeout:30];
+  return `[out:json][timeout:90];
 (
 ${filters}
 );
@@ -183,20 +183,31 @@ function buildFallbackTitle(type: ResourceType): string {
 // ---------------------------------------------------------------------------
 // Fetch from Overpass API
 // ---------------------------------------------------------------------------
-async function fetchOverpass(query: string): Promise<OsmElement[]> {
-  const res = await fetch(OVERPASS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(query)}`,
-  });
+async function fetchOverpass(query: string, retries = 3): Promise<OsmElement[]> {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const res = await fetch(OVERPASS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `data=${encodeURIComponent(query)}`,
+    });
 
-  if (!res.ok) {
+    if (res.ok) {
+      const json = await res.json();
+      return json.elements || [];
+    }
+
+    if ((res.status === 429 || res.status === 504) && attempt < retries) {
+      const wait = attempt * 5;
+      console.log(`  Overpass ${res.status}, retrying in ${wait}s (attempt ${attempt}/${retries})...`);
+      await new Promise((resolve) => setTimeout(resolve, wait * 1000));
+      continue;
+    }
+
     const text = await res.text();
     throw new Error(`Overpass API error ${res.status}: ${text.slice(0, 200)}`);
   }
 
-  const json = await res.json();
-  return json.elements || [];
+  return [];
 }
 
 // ---------------------------------------------------------------------------
@@ -302,20 +313,27 @@ async function main() {
   let totalInserted = 0;
   let totalFailed = 0;
 
-  for (let i = 0; i < regions.length; i++) {
-    const result = await processRegion(regions[i], dryRun);
-    totalFetched += result.fetched;
-    totalInserted += result.inserted;
-    totalFailed += result.failed;
+  let skippedRegions = 0;
 
-    // Rate limit courtesy: 2s delay between regions
+  for (let i = 0; i < regions.length; i++) {
+    try {
+      const result = await processRegion(regions[i], dryRun);
+      totalFetched += result.fetched;
+      totalInserted += result.inserted;
+      totalFailed += result.failed;
+    } catch (err) {
+      console.error(`  SKIPPED ${regions[i].name}: ${err instanceof Error ? err.message : err}`);
+      skippedRegions++;
+    }
+
+    // Rate limit courtesy: 5s delay between regions
     if (i < regions.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     }
   }
 
   console.log('\n========== SUMMARY ==========');
-  console.log(`Regions:  ${regions.length}`);
+  console.log(`Regions:  ${regions.length} (${skippedRegions} skipped)`);
   console.log(`Fetched:  ${totalFetched} OSM elements`);
   console.log(`Upserted: ${totalInserted} resources`);
   console.log(`Failed:   ${totalFailed}`);
