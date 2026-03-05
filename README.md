@@ -8,6 +8,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Last commit](https://img.shields.io/github/last-commit/RishabhSinha07/crisis-resource-map)](https://github.com/RishabhSinha07/crisis-resource-map/commits/main)
 
+## Demo
+
+https://github.com/user-attachments/assets/7c50f8f3-b81b-49f2-a1cc-24f600016953
+
 ---
 
 ## Why Crisis Resource Map?
