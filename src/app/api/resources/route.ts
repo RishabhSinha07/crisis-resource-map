@@ -1,11 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 
-export async function GET() {
-  const { data, error } = await supabase
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const north = searchParams.get('north');
+  const south = searchParams.get('south');
+  const east = searchParams.get('east');
+  const west = searchParams.get('west');
+
+  let query = supabase
     .from('resources')
     .select('*')
     .order('created_at', { ascending: false });
+
+  if (north && south && east && west) {
+    query = query
+      .gte('lat', parseFloat(south))
+      .lte('lat', parseFloat(north))
+      .gte('lng', parseFloat(west))
+      .lte('lng', parseFloat(east));
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

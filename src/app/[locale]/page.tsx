@@ -15,8 +15,10 @@ export default async function Home({
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (supabaseUrl && supabaseKey && supabaseUrl !== 'https://your-project.supabase.co') {
+      // Generous bbox around default center (34.0, 36.0) at zoom ~6
+      const bboxFilter = '&lat=gte.24&lat=lte.44&lng=gte.26&lng=lte.46';
       const res = await fetch(
-        `${supabaseUrl}/rest/v1/resources?select=*&order=created_at.desc`,
+        `${supabaseUrl}/rest/v1/resources?select=*&order=created_at.desc${bboxFilter}`,
         {
           headers: {
             apikey: supabaseKey,

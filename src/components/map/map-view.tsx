@@ -26,11 +26,18 @@ function MapEvents() {
       }
     },
     moveend(e) {
-      const { setCenter, setZoom } = useMapStore.getState();
+      const { setCenter, setZoom, setBounds } = useMapStore.getState();
       const map = e.target;
       const c = map.getCenter();
       setCenter([c.lat, c.lng]);
       setZoom(map.getZoom());
+      const b = map.getBounds();
+      setBounds({
+        north: b.getNorth(),
+        south: b.getSouth(),
+        east: b.getEast(),
+        west: b.getWest(),
+      });
     },
   });
 

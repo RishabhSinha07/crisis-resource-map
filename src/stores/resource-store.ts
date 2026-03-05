@@ -6,6 +6,7 @@ interface ResourceState {
   activeFilters: Set<ResourceType>;
   isOffline: boolean;
   setResources: (resources: Resource[]) => void;
+  mergeResources: (resources: Resource[]) => void;
   addResource: (resource: Resource) => void;
   updateResource: (resource: Resource) => void;
   toggleFilter: (type: ResourceType) => void;
@@ -20,6 +21,15 @@ export const useResourceStore = create<ResourceState>((set, get) => ({
   isOffline: false,
 
   setResources: (resources) => set({ resources }),
+
+  mergeResources: (incoming) =>
+    set((state) => {
+      const map = new Map(state.resources.map((r) => [r.id, r]));
+      for (const r of incoming) {
+        map.set(r.id, r);
+      }
+      return { resources: Array.from(map.values()) };
+    }),
 
   addResource: (resource) =>
     set((state) => ({

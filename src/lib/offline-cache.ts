@@ -39,6 +39,23 @@ export async function cacheResources(resources: Resource[]): Promise<void> {
   }
 }
 
+export async function mergeCacheResources(resources: Resource[]): Promise<void> {
+  try {
+    const db = await openDB();
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    for (const resource of resources) {
+      store.put(resource);
+    }
+    await new Promise<void>((resolve, reject) => {
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  } catch {
+    // IndexedDB not available
+  }
+}
+
 export async function getCachedResources(): Promise<Resource[]> {
   try {
     const db = await openDB();

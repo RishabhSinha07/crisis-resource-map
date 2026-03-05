@@ -1,30 +1,61 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase/client';
 import { useResourceStore } from '@/stores/resource-store';
-import { cacheResources, getCachedResources } from '@/lib/offline-cache';
+import { useMapStore, type MapBounds } from '@/stores/map-store';
+import { cacheResources, mergeCacheResources, getCachedResources } from '@/lib/offline-cache';
 import { syncPendingResources } from '@/lib/offline-queue';
 import type { Resource } from '@/lib/types';
 
+function bufferBounds(bounds: MapBounds, factor = 0.2): MapBounds {
+  const latSpan = bounds.north - bounds.south;
+  const lngSpan = bounds.east - bounds.west;
+  return {
+    north: bounds.north + latSpan * factor,
+    south: bounds.south - latSpan * factor,
+    east: bounds.east + lngSpan * factor,
+    west: bounds.west - lngSpan * factor,
+  };
+}
+
 export function useResources(initialResources?: Resource[]) {
-  const { setResources, addResource, updateResource, setOffline } = useResourceStore();
+  const { setResources, mergeResources, addResource, updateResource, setOffline } =
+    useResourceStore();
   const initialized = useRef(false);
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const fetchViewport = useCallback(
+    async (bounds: MapBounds) => {
+      const b = bufferBounds(bounds);
+      try {
+        const res = await fetch(
+          `/api/resources?north=${b.north}&south=${b.south}&east=${b.east}&west=${b.west}`
+        );
+        if (!res.ok) return;
+        const data: Resource[] = await res.json();
+        mergeResources(data);
+        mergeCacheResources(data);
+        setOffline(false);
+      } catch {
+        // Network failed — stay with what we have
+      }
+    },
+    [mergeResources, setOffline]
+  );
 
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
 
-    // Fetch resources: try network first, fall back to cache
+    // Initial load: use SSR data or fetch all
     async function loadResources() {
-      // Use SSR data if available
       if (initialResources && initialResources.length > 0) {
         setResources(initialResources);
         cacheResources(initialResources);
         return;
       }
 
-      // Try fetching from API
       try {
         const res = await fetch('/api/resources');
         const data: Resource[] = await res.json();
@@ -32,7 +63,6 @@ export function useResources(initialResources?: Resource[]) {
         cacheResources(data);
         setOffline(false);
       } catch {
-        // Network failed — load from IndexedDB cache
         const cached = await getCachedResources();
         setResources(cached);
         setOffline(true);
@@ -48,6 +78,9 @@ export function useResources(initialResources?: Resource[]) {
       for (const resource of synced) {
         addResource(resource);
       }
+      // Re-fetch current viewport after coming online
+      const bounds = useMapStore.getState().bounds;
+      if (bounds) fetchViewport(bounds);
     };
     const handleOffline = () => setOffline(true);
     window.addEventListener('online', handleOnline);
@@ -78,5 +111,24 @@ export function useResources(initialResources?: Resource[]) {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, [initialResources, setResources, addResource, updateResource, setOffline]);
+  }, [initialResources, setResources, mergeResources, addResource, updateResource, setOffline, fetchViewport]);
+
+  // Subscribe to bounds changes for viewport-based fetching
+  useEffect(() => {
+    const unsub = useMapStore.subscribe(
+      (state) => state.bounds,
+      (bounds) => {
+        if (!bounds) return;
+        if (debounceTimer.current) clearTimeout(debounceTimer.current);
+        debounceTimer.current = setTimeout(() => {
+          fetchViewport(bounds);
+        }, 300);
+      }
+    );
+
+    return () => {
+      unsub();
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    };
+  }, [fetchViewport]);
 }
